@@ -16,6 +16,16 @@ class Model_Iexcloud {
     const API_CONVERSION_URL = "https://cloud.iexapis.com/stable/fx/convert?symbols={symbols}&amount={amount}&token={token}";
     const API_INTRADAY_PRICES_URL = "https://cloud.iexapis.com/stable/stock/{ticker}/intraday-prices?chartIEXOnly=true&chartLast={last}&token={token}";
 
+
+   public static function getFieldURL($params) {
+
+        $params['ticker'] = str_replace("-", ".", $params['ticker']);
+        $url = str_replace(['{ticker}', '{field}', '{token}'], [$params['ticker'], $params['field'], self::SK], self::API_STOCK_URL);
+
+        return $url;
+
+    }
+
     public static function getField($params) {
 
         $params['ticker'] = str_replace("-", ".", $params['ticker']);
@@ -39,6 +49,13 @@ class Model_Iexcloud {
 
 		return $field_data;
 	}
+	
+	public static function getQuoteFieldURL($params) {
+        $params['ticker'] = str_replace("-", ".", $params['ticker']);
+        $url = str_replace(['{ticker}', '{field}', '{token}'], [$params['ticker'], $params['field'], self::SK], self::API_QUOTE_URL);
+
+        return $url;
+    }
 
     public static function getQuoteField($params) {
 
